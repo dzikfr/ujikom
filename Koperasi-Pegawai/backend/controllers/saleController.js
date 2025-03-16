@@ -5,7 +5,7 @@ const router = express.Router();
 
 // GET semua sales
 router.get("/", (req, res) => {
-  db.query("SELECT * FROM sales", (err, results) => {
+  db.query("SELECT * FROM sales LEFT JOIN customer ON sales.id_customer = customer.id_customer", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);
   });

@@ -26,70 +26,15 @@ const App = () => {
       <div className="container-fluid">
         {/* Header */}
         <div className="row d-flex justify-content-center">
-          <nav className="navbar navbar-expand-lg bg-primary navbar-dark text-center w-100">
-            <h1 className="navbar-brand mx-auto">HEADER</h1>
-          </nav>
-        </div>
-
-        {/* Navbar */}
-        <div className="row">
-          <nav className="navbar navbar-expand-lg bg-dark navbar-dark w-100">
-            <div className="container-fluid">
-              <a className="navbar-brand" href="#">
-                Navbar
-              </a>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <a className="nav-link" href="#">
-                      News
-                    </a>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                    >
-                      Dropdown
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Link 1
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Link 2
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Link 3
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <nav className="navbar navbar-expand-lg bg-success navbar-dark text-center w-100">
+            <h1 className="navbar-brand mx-auto">Koperasi - Pegawai</h1>
           </nav>
         </div>
 
         {/* Main Layout */}
         <div className="row">
           {/* Sidebar */}
-          <div className="col-2 bg-danger text-light min-vh-100 p-3">
+          <div className="col-2 bg-dark text-light min-vh-100 p-3">
             <ul className="nav flex-column">
               <li className="nav-item">
                 <Link className="nav-link text-light" to="/">
@@ -119,7 +64,7 @@ const App = () => {
             </ul>
           </div>
           {/* Content */}
-          <div className="col-10 p-4 bg-info">
+          <div className="col-10 p-4 bg-light">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/items" element={<Items />} />
@@ -132,9 +77,15 @@ const App = () => {
 
         {/* Footer */}
         <div className="row">
-          <footer className="bg-warning text-light py-3 text-center w-100">
+          <footer className="bg-secondary text-light py-3 text-center w-100">
             <div className="container">
-              <p className="mb-0">FOOTER</p>
+              <p className="mb-0">
+                Zixxfr @
+                {new Date().toLocaleString("en-US", {
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
             </div>
           </footer>
         </div>

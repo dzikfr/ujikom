@@ -26,6 +26,10 @@ const Transaction = () => {
     setItems(res.data);
   };
 
+  const formatRupiah = (number) => {
+    return new Intl.NumberFormat("id-ID").format(number);
+  };
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -116,6 +120,9 @@ const Transaction = () => {
           <tr>
             <th>ID</th>
             <th>Item</th>
+            <th>UOM</th>
+            <th>Harga Beli</th>
+            <th>Harga Jual</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Amount</th>
@@ -130,9 +137,12 @@ const Transaction = () => {
                 {items.find((i) => i.id_item === transaction.id_item)
                   ?.nama_item || "Unknown"}
               </td>
+              <td>{transaction.uom}</td>
+              <td>Rp {formatRupiah(transaction.harga_beli)}</td>
+              <td>Rp {formatRupiah(transaction.harga_jual)}</td>
               <td>{transaction.quantity}</td>
-              <td>{transaction.price}</td>
-              <td>{transaction.amount}</td>
+              <td>Rp {formatRupiah(transaction.price)}</td>
+              <td>Rp {formatRupiah(transaction.amount)}</td>
               <td>
                 <button
                   className="btn btn-warning me-2"

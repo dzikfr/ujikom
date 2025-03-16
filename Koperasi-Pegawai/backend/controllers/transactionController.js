@@ -5,7 +5,7 @@ const router = express.Router();
 
 // GET semua transaksi
 router.get("/", (req, res) => {
-  db.query("SELECT * FROM transaction", (err, results) => {
+  db.query("SELECT * FROM transaction LEFT JOIN item ON transaction.id_item = item.id_item", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);
   });

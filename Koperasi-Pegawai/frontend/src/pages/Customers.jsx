@@ -64,7 +64,7 @@ const Customers = () => {
           className="form-control mb-2"
           required
         />
-        <input
+        <textarea
           name="alamat"
           placeholder="Address"
           value={form.alamat}
@@ -72,6 +72,7 @@ const Customers = () => {
           className="form-control mb-2"
           required
         />
+
         <input
           name="telp"
           placeholder="Phone"

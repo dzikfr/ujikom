@@ -46,7 +46,7 @@ const Sales = () => {
   const handleEdit = (sale) => {
     setForm({
       tgl_sales: sale.tgl_sales,
-      id_customer: sale.id_customer,
+      id_customer: sale.id_customer.toString(),
       do_number: sale.do_number,
       status: sale.status,
     });
@@ -114,6 +114,8 @@ const Sales = () => {
             <th>Date</th>
             <th>Customer</th>
             <th>DO Number</th>
+            <th>Alamat</th>
+            <th>Kontak</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -134,6 +136,12 @@ const Sales = () => {
                   ?.nama_customer || "Unknown"}
               </td>
               <td>{sale.do_number}</td>
+              <td>{sale.alamat}</td>
+              <td>
+                <div>Telp : {sale.telp}</div>
+                <div>Fax : {sale.fax}</div>
+                <div>Email : {sale.email}</div>
+              </td>
               <td>{sale.status}</td>
               <td>
                 <button
