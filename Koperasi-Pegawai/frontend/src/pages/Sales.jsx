@@ -114,15 +114,15 @@ const Sales = () => {
             <th>Date</th>
             <th>Customer</th>
             <th>DO Number</th>
-            <th>Alamat</th>
-            <th>Kontak</th>
+            <th>Customer's Address</th>
+            <th>Contact</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {sales.map((sale, index) => (
-            <tr key={sale.id_sale}>
+            <tr key={sale.id_sales}>
               <td>{index + 1}</td>
               <td>
                 {new Date(sale.tgl_sales).toLocaleDateString("id-ID", {
@@ -152,7 +152,7 @@ const Sales = () => {
                 </button>
                 <button
                   className="btn btn-danger"
-                  onClick={() => handleDelete(sale.id_sale)}
+                  onClick={() => handleDelete(sale.id_sales)}
                 >
                   Delete
                 </button>

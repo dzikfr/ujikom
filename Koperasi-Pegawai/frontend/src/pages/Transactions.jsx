@@ -121,8 +121,8 @@ const Transaction = () => {
             <th>ID</th>
             <th>Item</th>
             <th>UOM</th>
-            <th>Harga Beli</th>
-            <th>Harga Jual</th>
+            <th>Buy Price</th>
+            <th>Sell Price</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Amount</th>

@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 // GET sales by ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  db.query("SELECT * FROM sales WHERE id_sale = ?", [id], (err, results) => {
+  db.query("SELECT * FROM sales WHERE id_sales = ?", [id], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length === 0) return res.status(404).json({ message: "Sale not found" });
     res.json(results[0]);
@@ -52,7 +52,7 @@ router.put("/:id", (req, res) => {
 // DELETE sales
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  db.query("DELETE FROM sales WHERE id_sale = ?", [id], (err, result) => {
+  db.query("DELETE FROM sales WHERE id_sales = ?", [id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     if (result.affectedRows === 0) return res.status(404).json({ message: "Sale not found" });
     res.json({ message: "Sale deleted successfully!" });
