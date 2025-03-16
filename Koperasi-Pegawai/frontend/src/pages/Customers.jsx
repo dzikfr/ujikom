@@ -48,8 +48,20 @@ const Customers = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3000/api/customers/${id}`);
-    fetchCustomers();
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this Customer?"
+    );
+
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/api/sales/${id}`);
+        alert("Customer deleted successfully!");
+        fetchCustomers();
+      } catch (error) {
+        console.error("Delete Error:", error.response?.data || error.message);
+        alert("Failed to delete Customer!");
+      }
+    }
   };
 
   return (

@@ -70,8 +70,20 @@ const Transaction = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3000/api/transactions/${id}`);
-    fetchTransactions();
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this transaction?"
+    );
+
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/api/transactions/${id}`);
+        alert("Transaction deleted successfully!");
+        fetchTransactions();
+      } catch (error) {
+        console.error("Delete Error:", error.response?.data || error.message);
+        alert("Failed to delete transaction!");
+      }
+    }
   };
 
   return (

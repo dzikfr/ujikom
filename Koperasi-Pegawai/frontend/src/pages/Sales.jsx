@@ -54,8 +54,20 @@ const Sales = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3000/api/sales/${id}`);
-    fetchSales();
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this sale?"
+    );
+
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/api/sales/${id}`);
+        alert("Sale deleted successfully!");
+        fetchSales();
+      } catch (error) {
+        console.error("Delete Error:", error.response?.data || error.message);
+        alert("Failed to delete sale!");
+      }
+    }
   };
 
   return (

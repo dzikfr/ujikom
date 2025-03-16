@@ -1,38 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Sales = () => {
-  const [sales, setSales] = useState([]);
-  const [customers, setCustomers] = useState([]);
+const Items = () => {
+  const [items, setItems] = useState([]);
   const [form, setForm] = useState({
-    tgl_sales: "",
-    id_customer: "",
-    do_number: "",
-    status: "",
+    nama_item: "",
+    uom: "",
+    harga_beli: "",
+    harga_jual: "",
   });
-  const [editingId, setEditingId] = useState(null);
+  const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    fetchSales();
-    fetchCustomers();
+    fetchItems();
   }, []);
 
-  const fetchSales = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/sales");
-      setSales(res.data);
-    } catch (error) {
-      console.error("Error fetching sales:", error);
-    }
-  };
-
-  const fetchCustomers = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/customers");
-      setCustomers(res.data);
-    } catch (error) {
-      console.error("Error fetching customers:", error);
-    }
+  const fetchItems = async () => {
+    const res = await axios.get("http://localhost:3000/api/items");
+    setItems(res.data);
   };
 
   const handleChange = (e) => {
@@ -41,104 +26,95 @@ const Sales = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (editingId) {
-        await axios.put(`http://localhost:3000/api/sales/${editingId}`, {
-          ...form,
-          id_customer: parseInt(form.id_customer), 
-        });
-      } else {
-        await axios.post("http://localhost:3000/api/sales", {
-          ...form,
-          id_customer: parseInt(form.id_customer),
-        });
-      }
-      setForm({ tgl_sales: "", id_customer: "", do_number: "", status: "" });
-      setEditingId(null);
-      fetchSales();
-    } catch (error) {
-      console.error("Error submitting data:", error);
+    if (editId) {
+      await axios.put(`http://localhost:3000/api/items/${editId}`, form);
+    } else {
+      await axios.post("http://localhost:3000/api/items", form);
     }
+    setForm({ nama_item: "", uom: "", harga_beli: "", harga_jual: "" });
+    setEditId(null);
+    fetchItems();
   };
 
-  const handleEdit = (sale) => {
+  const handleEdit = (item) => {
     setForm({
-      tgl_sales: sale.tgl_sales,
-      id_customer: sale.id_customer.toString(), 
-      do_number: sale.do_number,
-      status: sale.status,
+      nama_item: item.nama_item,
+      uom: item.uom,
+      harga_beli: item.harga_beli,
+      harga_jual: item.harga_jual,
     });
-    setEditingId(sale.id_sale);
+    setEditId(item.id_item);
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/api/sales/${id}`);
-      fetchSales();
-    } catch (error) {
-      console.error("Error deleting sale:", error);
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this Item?"
+    );
+
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/api/items/${id}`);
+        alert("Item deleted successfully!");
+        fetchItems();
+      } catch (error) {
+        console.error("Delete Error:", error.response?.data || error.message);
+        alert("Failed to delete Item!");
+      }
     }
   };
 
   return (
     <div className="p-4">
-      <h2>Manage Sales</h2>
+      <h2>Manage Items</h2>
       <form onSubmit={handleSubmit} className="mb-3">
         <input
-          name="tgl_sales"
-          type="date"
-          value={form.tgl_sales}
+          name="nama_item"
+          placeholder="Item Name"
+          value={form.nama_item}
           onChange={handleChange}
           className="form-control mb-2"
           required
         />
-        <select
-          name="id_customer"
-          value={form.id_customer}
-          onChange={handleChange}
-          className="form-control mb-2"
-          required
-        >
-          <option value="">Select Customer</option>
-          {customers.map((cust) => (
-            <option key={cust.id_customer} value={cust.id_customer}>
-              {cust.nama_customer}
-            </option>
-          ))}
-        </select>
         <input
-          name="do_number"
-          placeholder="DO Number"
-          value={form.do_number}
+          name="uom"
+          placeholder="UOM"
+          value={form.uom}
           onChange={handleChange}
           className="form-control mb-2"
           required
         />
-        <select
-          name="status"
-          value={form.status}
+        <input
+          name="harga_beli"
+          type="number"
+          placeholder="Buying Price"
+          value={form.harga_beli}
           onChange={handleChange}
           className="form-control mb-2"
           required
-        >
-          <option value="">Select Status</option>
-          <option value="Pending">Pending</option>
-          <option value="Completed">Completed</option>
-        </select>
+        />
+        <input
+          name="harga_jual"
+          type="number"
+          placeholder="Selling Price"
+          value={form.harga_jual}
+          onChange={handleChange}
+          className="form-control mb-2"
+          required
+        />
         <button type="submit" className="btn btn-primary">
-          {editingId ? "Update Sale" : "Add Sale"}
+          {editId ? "Update Item" : "Add Item"}
         </button>
-        {editingId && (
+        {editId && (
           <button
             type="button"
             className="btn btn-secondary ms-2"
             onClick={() => {
-              setEditingId(null);
+              setEditId(null);
               setForm({
-                tgl_sales: "",
-                id_customer: "",
-                do_number: "",
-                status: "",
+                nama_item: "",
+                uom: "",
+                harga_beli: "",
+                harga_jual: "",
               });
             }}
           >
@@ -149,61 +125,42 @@ const Sales = () => {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>No</th>
-            <th>Date</th>
-            <th>Customer</th>
-            <th>DO Number</th>
-            <th>Customer's Address</th>
-            <th>Contact</th>
-            <th>Status</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>UOM</th>
+            <th>Buying Price</th>
+            <th>Selling Price</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {sales.map((sale, index) => {
-            const customer = customers.find(
-              (c) => c.id_customer === sale.id_customer
-            );
-            return (
-              <tr key={sale.id_sale}>
-                <td>{index + 1}</td>
-                <td>
-                  {new Date(sale.tgl_sales).toLocaleDateString("id-ID", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </td>
-                <td>{customer ? customer.nama_customer : "Unknown"}</td>
-                <td>{sale.do_number}</td>
-                <td>{customer ? customer.alamat : "Unknown"}</td>
-                <td>
-                  <div>Telp : {customer?.telp || "N/A"}</div>
-                  <div>Fax : {customer?.fax || "N/A"}</div>
-                  <div>Email : {customer?.email || "N/A"}</div>
-                </td>
-                <td>{sale.status}</td>
-                <td>
-                  <button
-                    className="btn btn-warning me-2"
-                    onClick={() => handleEdit(sale)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(sale.id_sale)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+          {items.map((item) => (
+            <tr key={item.id_item}>
+              <td>{item.id_item}</td>
+              <td>{item.nama_item}</td>
+              <td>{item.uom}</td>
+              <td>{item.harga_beli}</td>
+              <td>{item.harga_jual}</td>
+              <td>
+                <button
+                  className="btn btn-warning me-2"
+                  onClick={() => handleEdit(item)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(item.id_item)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default Sales;
+export default Items;
