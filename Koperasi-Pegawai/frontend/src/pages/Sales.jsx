@@ -50,7 +50,7 @@ const Sales = () => {
       do_number: sale.do_number,
       status: sale.status,
     });
-    setEditingId(sale.id_sale);
+    setEditingId(sale.id_sales);
   };
 
   const handleDelete = async (id) => {
@@ -97,6 +97,7 @@ const Sales = () => {
           ))}
         </select>
         <input
+          type="number"
           name="do_number"
           placeholder="DO Number"
           value={form.do_number}

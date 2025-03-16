@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center">Dashboard</h2>
+      <h2 className="text-center">Summary In Last Month</h2>
       <div className="row">
         <div className="col-md-3">
           <div className="card bg-primary text-white text-center p-3">

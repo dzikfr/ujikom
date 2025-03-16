@@ -39,7 +39,7 @@ router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { tgl_sales, id_customer, do_number, status } = req.body;
   db.query(
-    "UPDATE sales SET tgl_sales = ?, id_customer = ?, do_number = ?, status = ? WHERE id_sale = ?",
+    "UPDATE sales SET tgl_sales = ?, id_customer = ?, do_number = ?, status = ? WHERE id_sales = ?",
     [tgl_sales, id_customer, do_number, status, id],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
