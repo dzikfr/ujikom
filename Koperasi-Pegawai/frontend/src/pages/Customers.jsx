@@ -54,7 +54,7 @@ const Customers = () => {
 
     if (isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/api/sales/${id}`);
+        await axios.delete(`http://localhost:3000/api/customers/${id}`);
         alert("Customer deleted successfully!");
         fetchCustomers();
       } catch (error) {
